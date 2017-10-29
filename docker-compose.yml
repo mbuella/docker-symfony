@@ -5,8 +5,9 @@ services:
         ports:
             - "3306:3306"
         environment:
+           # MYSQL_ROOT_HOST: aquanote_db #disallow other access
             MYSQL_ROOT_PASSWORD: root
-           # MYSQL_DATABASE: symfony
+            MYSQL_DATABASE: aquanote
            # MYSQL_USER: symfony
            # MYSQL_PASSWORD: symfony
     php:
@@ -17,11 +18,11 @@ services:
             - ./application:/var/www/application
             - ./logs/app:/var/www/application/app/logs
         links:
-            - db
+            - db:aquanote_db #don't forget to set this to db host in parameters.yml
     nginx:
         build: ./docker/nginx
         ports:
-            - "80:9010"
+            - "9010:80"
         links:
             - php
         volumes_from:
