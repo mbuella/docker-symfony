@@ -1,31 +1,31 @@
 version: '2'
 services:
-    db:
+    app_db:
         image: mysql
         ports:
             - "3306:3306"
         environment:
-           # MYSQL_ROOT_HOST: aquanote_db #disallow other access
+           # MYSQL_ROOT_HOST: app_db #disallow other access
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: aquanote
+            MYSQL_DATABASE: aquanote #use db set in parameters.yml
            # MYSQL_USER: symfony
            # MYSQL_PASSWORD: symfony
-    php:
+    app_php:
         build: ./docker/php-fpm
         expose:
             - "9000"
         volumes:
             - ./application:/var/www/application
-            - ./logs/app:/var/www/application/app/logs
+            - ./logs/app:/var/www/application/var/logs
         links:
-            - db:aquanote_db #don't forget to set this to db host in parameters.yml
-    nginx:
+            - app_db #don't forget to use this as db host in parameters.yml
+    app_server:
         build: ./docker/nginx
         ports:
             - "9010:80"
         links:
-            - php
+            - app_php
         volumes_from:
-            - php
+            - app_php
         volumes:
-            - ./logs/nginx/:/var/log/nginx            
+            - ./logs/nginx/:/var/log/nginx

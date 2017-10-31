@@ -8,15 +8,8 @@ composer install --prefer-dist -n -vv
 
 # database migrations/fixtures
 # (must be automated only the first time app is deployed)
-php bin/console \ 
-    doctrine:migrations:migrate \
-        --allow-no-migration \
-        --no-interaction \
-        --env=prod
-php bin/console \
-    doctrine:fixtures:load \
-        --no-interaction \
-        --env=prod
+php bin/console doctrine:migrations:migrate --allow-no-migration --no-interaction --env=prod
+php bin/console doctrine:fixtures:load --no-interaction --env=prod
     
 # Other commands after this line
 # ...
@@ -27,4 +20,4 @@ chmod -R 777 var/cache
 chmod -R 777 var/logs
 
 # start PHP FPM Server
-exec /usr/local/sbin/php5-fpm --nodaemonize
+exec $(which php-fpm) --nodaemonize

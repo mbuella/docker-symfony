@@ -2,8 +2,7 @@ FROM alpine:3.4
 
 MAINTAINER Marlon Buella <marlon.b.buella@gmail.com>
 
-RUN apk add --update nginx
-RUN rm -rf /var/cache/apk/* && rm -rf /tmp/*
+RUN apk --no-cache add --update nginx
 
 ADD nginx.conf /etc/nginx/
 ADD app.conf /etc/nginx/conf.d/
@@ -16,4 +15,3 @@ CMD ["nginx"]
 
 EXPOSE 80
 EXPOSE 443
-
