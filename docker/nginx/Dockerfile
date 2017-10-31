@@ -7,7 +7,7 @@ RUN apk --no-cache add --update nginx
 ADD nginx.conf /etc/nginx/
 ADD app.conf /etc/nginx/conf.d/
 
-RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf
+RUN echo "upstream php-upstream { server app_php:9000; }" > /etc/nginx/conf.d/upstream.conf
 
 RUN adduser -D -g '' -G www-data www-data
 
